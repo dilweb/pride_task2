@@ -1,0 +1,10 @@
+.git
+.idea
+__pycache__
+*.pyc
+*.pyo
+*.pytest_cache
+.env
+README.md
+task
+tests/

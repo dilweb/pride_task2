@@ -58,7 +58,20 @@ class OrderProcessingConsumer:
             notification: OrderStatusUpdate = process_order(order)
             self._ensure_producer().publish(notification)
             self._consumer.commit(message, asynchronous=False)
-            logger.info("processed order %s with status %s", order.order_id, notification.status)
+            if notification.details:
+                logger.info(
+                    "processed order %s with status %s (%s)",
+                    order.order_id,
+                    notification.status,
+                    notification.details,
+                )
+            else:
+                logger.info(
+                    "processor order %s with status %s",
+                    order.order_id,
+                    notification.status,
+                )
+
         except Exception:
             logger.exception("failed to process order %s", order.order_id)
 
